@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/015614e963.js" crossorigin="anonymous"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
+    <title>Spartan Career Map</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-header">
+            <button class="filter-open-btn">
+                &#9776;
+            </button>
+            <h1><a href="/index.html">Spartan Career Map</a></h1>
+        </div>
+        <div class="data-source-display">
+            Viewing Jobs
+        </div>
+        <ul>
+            <li><a target="_blank" href="https://careernetwork.msu.edu">About</a></li>
+            <li><button id="toggle-saved-items-panel"><i class="fa-regular fa-heart"></i> Saved Items</button></li>
+        </ul>
+    </nav>
+    <div id="saved-items-bar">
+        <button class="saved-items-close-btn">
+            &#10006;
+        </button>
+        <div>
+            <h2>Saved Items</h2>
+            <ul class="saved-items-list">
+            </ul>
+            <button class="clear-saved-items">Clear Saved Items</button>
+        </div>
+        <form id="export-saved-items-form">
+            <div class="saved-items-email-div">
+                <h3>Email</h3>
+                <input required class="saved-items-email-input" type="email" name="" id="">
+            </div>
+            <button class="export-saved-items-button">Export to Email</button>
+        </form>
+    </div>
+    <div class="filter filter-white">
+        <!-- <h3>Filters</h3> -->
+        <button class="filter-close-btn">
+            &#10006;
+        </button>
+
+        <img src="images/spartan-logo.png" alt="Logo" class="spartan-logo">
+
+        <div class="reset-filters-div">
+            <button class="reset-filters-button">Reset Filters</button>
+        </div>
+
+        <div class="data-toggle-container">
+            <div class="data-toggle-slider"> </div>
+            <button class="data-toggle-btn data-toggle-alumni">View Alumni</button>
+            <button class="data-toggle-btn data-toggle-jobs data-toggle-active">View Jobs</button>
+        </div>
+
+        <div class="filter-list alumni-filter-list">
+            <div>
+                <h4>Alumni Location</h4>
+                <input class="text-filter-input" id="alumni-location-filter" type="text">
+            </div>
+            <div>
+                <h4>Alumni Name</h4>
+                <input class="text-filter-input" id="alumni-name-filter" type="text">
+            </div>
+            <div>
+                <h4>Alumni Job Title</h4>
+                <input class="text-filter-input" id="alumni-job-title-filter" type="text">
+            </div>
+            <div>
+                <h4>Alumni Employer</h4>
+                <input class="text-filter-input" id="alumni-employer-filter" type="text">
+            </div>
+        </div>
+
+        <div class="filter-list job-filter-list filter-list-active ">
+            <div>
+                <h4>Job Title</h4>
+                <input class="text-filter-input" id="job-title-filter" type="text">
+            </div>
+            <div>
+                <h4>Employer</h4>
+                <input class="text-filter-input" id="job-employer-filter" type="text">
+            </div>
+            <div>
+                <h4>Location</h4>
+                <input class="text-filter-input" id="job-location-filter" type="text">
+            </div>
+            <div>
+                <h4>Colleges Accepted</h4>
+                <input class="text-filter-input" id="job-colleges-accepted-filter" type="text">
+            </div>
+            <div>
+                <h4>Majors Accepted</h4>
+                <input class="text-filter-input" id="job-majors-accepted-filter" type="text">
+            </div>
+            <div>
+                <h4>Job Type</h4>
+                <div class="radio-filter-div">
+                    <div>
+                        <input id="job-type-internship-filter" name="internship" type="checkbox">
+                        <label for="job-type-internship-filter">Internship</label>
+                    </div>
+                    <div>
+                        <input id="job-type-job-filter" name="job" type="checkbox">
+                        <label for="job-type-job-filter">Job</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>Employment Type</h4>
+                <div class="radio-filter-div">
+                    <div>
+                        <input id="employment-full-time-filter" name="full-time" type="checkbox">
+                        <label for="employment-full-time-filter">Full Time</label>
+                    </div>
+                    <div>
+                        <input id="employment-part-time-filter" name="part-time" type="checkbox">
+                        <label for="employment-part-time-filter">Part Time</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>In the US</h4>
+                <div class="radio-filter-div">
+                    <div>
+                        <input id="employment-in-us-yes-filter" name="in-us-yes" type="checkbox">
+                        <label for="employment-in-us-yes-filter">Yes</label>
+                    </div>
+                    <div>
+                        <input id="employment-in-us-no-filter" name="in-us-no" type="checkbox">
+                        <label for="employment-in-us-no-filter">No</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>Accepts International Students</h4>
+                <div class="radio-filter-div">
+                    <div>
+                        <input id="accepts-internationals-yes-filter" name="internationals-yes" type="checkbox">
+                        <label for="accepts-internationals-yes-filter">Yes</label>
+                    </div>
+                    <div>
+                        <input id="accepts-internationals-no-filter" name="internationals-no" type="checkbox">
+                        <label for="accepts-internationals-no-filter">No</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>Sponsors International Students</h4>
+                <div class="radio-filter-div">
+                    <div>
+                        <input id="sponsors-internationals-yes-filter" name="sponsors-internationals-yes"
+                            type="checkbox">
+                        <label for="sponsors-internationals-yes-filter">Yes</label>
+                    </div>
+                    <div>
+                        <input id="sponsors-internationals-no-filter" name="sponsors-internationals-no" type="checkbox">
+                        <label for="sponsors-internationals-no-filter">No</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="data-point-info job-info">
+        <button class="save-data-button" id="save-job-button">
+            <i class="fa-regular fa-heart"></i> Save
+        </button>
+        <button class="data-point-info-close-btn">
+            &#10006;
+        </button>
+        <div id="job-info-header">
+            <h3>Software Engineer Intern</h3>
+            <span>
+                <i class="fa-solid fa-building"></i>
+                <p>Stark Industries</p>
+            </span>
+            <span>
+                <i class="fa-solid fa-location-dot"></i>
+                <p id="job-info-location">Manhattan, New York</p>
+            </span>
+        </div>
+        <hr>
+        <div id="job-info-details">
+            <div id="job-type">
+                <h4>Job Type</h4>
+                <p>Internship</p>
+            </div>
+            <div id="job-employment-type">
+                <h4>Employment Type</h4>
+                <p>Full-Time</p>
+            </div>
+            <div id="job-in-us">
+                <h4>In the US</h4>
+                <p>No</p>
+            </div>
+            <div id="job-has-sponsorships">
+                <h4>Sponsors OPT/CPT</h4>
+                <p>No</p>
+            </div>
+            <div id="job-accepts-international">
+                <h4>Accepts International Students</h4>
+                <p>No</p>
+            </div>
+            <!-- <div id="job-id">
+                <h4>Handshake ID</h4>
+                <p>0</p>
+            </div> -->
+            <!-- <div id="job-date-posted">
+                <h4>Date Posted</h4>
+                <p>Jan 18 2023</p>
+            </div>
+            <div id="job-application-range">
+                <h4>Application Period</h4>
+                <p>Jan 18 2023 - March 1 2023</p>
+            </div>
+            <div id="job-required-majors">
+                <h4>Required Majors</h4>
+                <ul>
+                    <li>Computer Science</li>
+                    <li>Computer Engineering</li>
+                    <li>Data Science</li>
+                    <li>Mathematics</li>
+                    <li>Applied Engineering Sciences</li>
+                </ul>
+            </div>
+            <div id="job-required-school-years">
+                <h4>Required School Years</h4>
+                <ul>
+                    <li>Senior</li>
+                    <li>Junior</li>
+                </ul>
+            </div>
+            <div id="job-required-colleges">
+                <h4>Required Colleges</h4>
+                <ul>
+                    <li>College of Engineering</li>
+                    <li>College of Applied Science</li>
+                    <li>College of Mathematics</li>
+                </ul>
+            </div>
+            <div id="job-required-gpa">
+                <h4>Required GPA</h4>
+                <p>N/A</p>
+            </div>
+            <div id="job-interview">
+                <h4>Interviews</h4>
+                <p>None</p>
+            </div>
+            <div id="job-applicants">
+                <h4>No. of Applicants</h4>
+                <p>51</p>
+            </div> -->
+        </div>
+    </section>
+
+    <section class="data-cluster-info job-info">
+        <button class="data-cluster-info-close-btn">
+            &#10006;
+        </button>
+        
+        <li>
+            <div id="cluster-info-header">
+            
+                <h3>Software Engineer Intern</h3>
+                <span>
+                    <i class="fa-solid fa-building"></i>
+                    <p>Stark Industries</p>
+                </span>
+                <span>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p id="cluster-info-location">Manhattan, New York</p>
+                </span>
+                <hr>
+            </div>
+        </li>  
+    </section>
+
+
+    <section class="data-point-info alumni-info">
+        <button class="save-data-button" id="save-alumni-button">
+            <i class="fa-regular fa-heart"></i> Save
+        </button>
+        <button class="data-point-info-close-btn">
+            &#10006;
+        </button>
+        <div id="alumni-header">
+            <img id="alumni-header-image" src="images/profile-picture.png" alt="">
+            <h3 id="alumni-name"></h3>
+        </div>
+        <hr>
+        <div id="alumni-job-title">
+            <h4>Job Title</h4>
+            <p></p>
+        </div>
+        <div id="alumni-current-company">
+            <h4>Current Company</h4>
+            <p></p>
+        </div>
+        <div id="alumni-location">
+            <h4>Location</h4>
+            <p></p>
+        </div>
+    </section>
+
+    <div id="map"></div>
+    </div>
+    <script type="module" src="clusterweb.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

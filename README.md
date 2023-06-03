@@ -1,1 +1,2 @@
-# spartan-career-map-V2
+# spartan-career-map
+Spartan Career Map
